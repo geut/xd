@@ -1,0 +1,57 @@
+{
+  "name": "@geut/xd",
+  "version": "1.0.0",
+  "description": "Template to create modules following the Geut path",
+  "main": "index.js",
+  "bin": {
+    "xd": "./bin/xd.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --passWithNoTests",
+    "posttest": "npm run lint",
+    "lint": "eslint \"**/*.js\"",
+    "version": "chan release ${npm_package_version} && git add .",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "core_d": "^1.0.1",
+    "nanolru": "^1.0.0",
+    "optionator": "^0.8.2",
+    "resolve": "^1.12.0"
+  },
+  "devDependencies": {
+    "@geut/chan": "^2.0.0",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.8.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geut/xd.git"
+  },
+  "keywords": [
+    "create",
+    "geut",
+    "module"
+  ],
+  "author": {
+    "name": "GEUT",
+    "email": "contact@geutstudio.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geut/xd/issues"
+  },
+  "homepage": "https://github.com/geut/xd#readme"
+}
