@@ -1,6 +1,6 @@
 const LRU = require('nanolru')
 const resolve = require('resolve')
-const options = require('./options')
+const options = require('./lib/options')
 const path = require('path')
 
 const engines = require('./lib/engines')
@@ -24,20 +24,20 @@ function createCache (cwd) {
   let engine
   let lintPath
   for (engine of engines) {
-    lintPath = lookup(engine.name, cwd)
+    lintPath = lookup(engine.binPath, cwd)
     if (lintPath) {
       break
     }
   }
 
   if (!lintPath) {
-    engine = engines.find(l => l.name === 'eslint')
-    lintPath = resolve.sync(engine.name)
+    engine = engines.find(l => l.binPath === 'eslint')
+    lintPath = resolve.sync(engine.binPath)
   }
 
   return lintCache.set(cwd, {
     lint: require(lintPath),
-    engine,
+    Engine: engine,
     // use chalk from eslint
     chalk: require(resolve.sync('chalk', {
       basedir: path.dirname(lintPath)
@@ -57,8 +57,6 @@ function clearRequireCache (cwd) {
  * The core_d service entry point.
  */
 exports.invoke = function (cwd, args, text, mtime) {
-  return 'hola'
-
   process.chdir(cwd)
 
   let cache = lintCache.get(cwd)
@@ -78,12 +76,10 @@ exports.invoke = function (cwd, args, text, mtime) {
     return `${options.generateHelp()}\n`
   }
 
-  const engineOptions = cache.engine.translateOptions(currentOptions, cwd)
-  engineOptions.cwd = path.resolve(cwd)
+  const engineOptions = cache.Engine.translateOptions(currentOptions, path.resolve(cwd))
 
-  // eslint-disable-next-line
-  const engine = new cache.engine(cache.lint, engineOptions)
-
+  const engine = new cache.Engine(cache.lint, engineOptions)
+  //return JSON.stringify(engine._options)
   if (currentOptions.printConfig) {
     if (files.length !== 1) {
       return fail('The --print-config option requires a ' +
@@ -131,6 +127,7 @@ exports.invoke = function (cwd, args, text, mtime) {
       (maxWarnings >= 0 && report.warningCount > maxWarnings)) {
     return fail(output)
   }
+
   return output
 }
 
