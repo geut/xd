@@ -47,6 +47,12 @@ Remember that `xd` has a eslint API compatible, so you can fix your code using s
 $ xd *.js --fix
 ```
 
+## Help
+
+```
+$ xd --help
+```
+
 ## IDE Support
 
 ### vim/nvim using ALE
