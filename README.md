@@ -15,9 +15,9 @@ xd is a tool that detects your local lint and formatter to run the operation usi
 xd support eslint compatible engines.
 
 We support the next engines:
-  - standard
-  - standard + prettier
-  - eslint
+  - `standard`
+  - `standard + prettier`
+  - `eslint`
 
 ## <a name="install"></a> Install
 
@@ -27,7 +27,7 @@ $ npm install -g @geut/xd
 
 ## <a name="usage"></a> Usage
 
-Suppose that you want to use standard with prettier in your project.
+### standard + prettier
 
 Start by adding your dependencies locally:
 
@@ -41,11 +41,15 @@ That's it, try to execute `xd` in your project:
 $ xd *.js
 ```
 
-Remember that `xd` has a eslint API compatible, so you can fix your code using standard + prettier by:
+Remember that `xd` has a eslint API compatible, so you can format your code with the `standard + prettier` rules by:
 
 ```
 $ xd *.js --fix
 ```
+
+### eslint
+
+xd will check your local binary eslint and configuration or it will use a fallback binary that we include.
 
 ## Help
 
