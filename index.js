@@ -1,4 +1,5 @@
 const LRU = require('nanolru')
+const Module = require('module')
 const resolve = require('resolve')
 const options = require('./lib/options')
 const path = require('path')
@@ -7,13 +8,23 @@ const engines = require('./lib/engines')
 
 const lintCache = new LRU(10)
 
+Module.prototype.require = new Proxy(Module.prototype.require, {
+  apply (target, thisArg, argumentsList) {
+    if (argumentsList[0] === 'prettier') {
+      argumentsList[0] = resolve.sync('prettier', { basedir: process.cwd() })
+    }
+
+    return Reflect.apply(target, thisArg, argumentsList)
+  }
+})
+
 function fail (message) {
   return `${message}\n# exit 1`
 }
 
-function lookup (lint, cwd) {
+function lookup (module, cwd) {
   try {
-    return resolve.sync(lint, { basedir: cwd })
+    return resolve.sync(module, { basedir: cwd })
   } catch (e) {
     // module not found
     return null
@@ -23,6 +34,7 @@ function lookup (lint, cwd) {
 function createCache (cwd) {
   let engine
   let lintPath
+  let prettierPath
   for (engine of engines) {
     lintPath = lookup(engine.binPath, cwd)
     if (lintPath) {
@@ -30,13 +42,17 @@ function createCache (cwd) {
     }
   }
 
-  if (!lintPath) {
+  if (lintPath && engine.binPath !== 'eslint') {
+    // We search for prettier.
+    prettierPath = lookup('prettier', cwd)
+  } else {
     engine = engines.find(l => l.binPath === 'eslint')
     lintPath = resolve.sync(engine.binPath)
   }
 
   return lintCache.set(cwd, {
     lint: require(lintPath),
+    prettierPath,
     Engine: engine,
     // use chalk from eslint
     chalk: require(resolve.sync('chalk', {
@@ -77,7 +93,7 @@ exports.invoke = function (cwd, args, text, mtime) {
   }
 
   const engineOptions = cache.Engine.translateOptions(currentOptions, path.resolve(cwd))
-
+  engineOptions.prettierPath = cache.prettierPath
   const engine = new cache.Engine(cache.lint, engineOptions)
 
   if (currentOptions.printConfig) {
@@ -94,11 +110,19 @@ exports.invoke = function (cwd, args, text, mtime) {
     return JSON.stringify(fileConfig, null, '  ')
   }
 
+  if (currentOptions.fixToStdout && !stdin) {
+    return fail('The --fix-to-stdout option must be used with --stdin.')
+  }
+
   let report
   if (stdin) {
     report = engine.executeOnText(text, currentOptions.stdinFilename)
   } else {
     report = engine.executeOnFiles(files)
+  }
+
+  if (currentOptions.fixToStdout) {
+    return (report.results[0] && report.results[0].output) || text
   }
 
   if (currentOptions.fix && !currentOptions.fixDryRun) {
