@@ -1,19 +1,65 @@
-# xd
+# xd :laughing:
 
 [![Build Status](https://travis-ci.com/geut/xd.svg?branch=master)](https://travis-ci.com/geut/xd)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-> Template to create modules following the :snail: **Geut** path
+> Run your lint and formatter in a single fast daemon.
+
+This project is based on the excellent [eslint_d](https://github.com/mantoni/eslint_d.js).
+
+## How it works
+
+xd is a tool that detects your local lint and formatter to run the operation using a eslint compatible API.
+
+xd support eslint compatible engines.
+
+We support the next engines:
+  - standard
+  - standard + prettier
+  - eslint
 
 ## <a name="install"></a> Install
 
 ```
+$ npm install -g @geut/xd
 ```
 
 ## <a name="usage"></a> Usage
 
+Suppose that you want to use standard with prettier in your project.
+
+Start by adding your dependencies locally:
+
 ```
+$ npm install --save-dev standard prettier
+```
+
+That's it, try to execute `xd` in your project:
+
+```
+$ xd *.js
+```
+
+Remember that `xd` has a eslint API compatible, so you can fix your code using standard + prettier by:
+
+```
+$ xd *.js --fix
+```
+
+## IDE Support
+
+### vim/nvim using ALE
+
+```vim
+let g:ale_javascript_eslint_use_global = 1
+let g:ale_javascript_eslint_executable = 'xd'
+let g:ale_linters = {
+  \ 'javascript': ['eslint']
+\}
+let g:ale_fixers = {
+  \ 'javascript': ['eslint']
+\}
 ```
 
 ## <a name="issues"></a> Issues

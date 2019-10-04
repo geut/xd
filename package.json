@@ -1,7 +1,7 @@
 {
   "name": "@geut/xd",
   "version": "1.0.0",
-  "description": "Template to create modules following the Geut path",
+  "description": "Run your lint and formatter in a single fast daemon.",
   "main": "index.js",
   "bin": {
     "xd": "./bin/xd.js"
