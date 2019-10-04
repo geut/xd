@@ -79,7 +79,7 @@ exports.invoke = function (cwd, args, text, mtime) {
   const engineOptions = cache.Engine.translateOptions(currentOptions, path.resolve(cwd))
 
   const engine = new cache.Engine(cache.lint, engineOptions)
-  //return JSON.stringify(engine._options)
+
   if (currentOptions.printConfig) {
     if (files.length !== 1) {
       return fail('The --print-config option requires a ' +
@@ -94,10 +94,6 @@ exports.invoke = function (cwd, args, text, mtime) {
     return JSON.stringify(fileConfig, null, '  ')
   }
 
-  if (currentOptions.fixToStdout && !stdin) {
-    return fail('The --fix-to-stdout option must be used with --stdin.')
-  }
-
   let report
   if (stdin) {
     report = engine.executeOnText(text, currentOptions.stdinFilename)
@@ -105,13 +101,7 @@ exports.invoke = function (cwd, args, text, mtime) {
     report = engine.executeOnFiles(files)
   }
 
-  if (currentOptions.fixToStdout) {
-    // No results will be returned if the file is ignored
-    // No output will be returned if there are no fixes
-    return (report.results[0] && report.results[0].output) || text
-  }
-
-  if (currentOptions.fix) {
+  if (currentOptions.fix && !currentOptions.fixDryRun) {
     engine.outputFixes(report)
   }
 
@@ -122,9 +112,9 @@ exports.invoke = function (cwd, args, text, mtime) {
   const format = currentOptions.format
   const formatter = engine.getFormatter(format)
   const output = formatter(report.results)
+
   const maxWarnings = currentOptions.maxWarnings
-  if (report.errorCount ||
-      (maxWarnings >= 0 && report.warningCount > maxWarnings)) {
+  if (report.errorCount || (maxWarnings >= 0 && report.warningCount > maxWarnings)) {
     return fail(output)
   }
 

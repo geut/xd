@@ -4,7 +4,8 @@
   "description": "Template to create modules following the Geut path",
   "main": "index.js",
   "bin": {
-    "xd": "./bin/xd.js"
+    "xd": "./bin/xd.js",
+    "xd-prettier": "./bin/xd-prettier.js"
   },
   "scripts": {
     "start": "node index.js",
