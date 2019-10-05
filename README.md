@@ -6,7 +6,7 @@
 
 > Run your lint and formatter in a single fast daemon.
 
-This project is based on the excellent [eslint_d](https://github.com/mantoni/eslint_d.js).
+This project is based on [eslint_d](https://github.com/mantoni/eslint_d.js).
 
 ## How it works
 
