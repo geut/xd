@@ -1,43 +1,49 @@
 const path = require('path')
 const fs = require('fs').promises
 
-const { generateEnvironment } = require('./helpers')
-const { invoke } = require('..')
+const { generateEnvironment, run } = require('./helpers')
 
 module.exports = function runCommonTests (environment = 'eslint') {
   beforeAll(async () => {
     const fixture = path.resolve(`./tests/fixtures/${environment}`)
     this.cwd = await generateEnvironment(fixture, `xd-${environment}-test`)
+    this.filename = `${this.cwd}/index.js`
+    this.content = await fs.readFile(this.filename, 'utf8')
+    await run(this.cwd, 'stop')
   })
 
-  test(`${environment}: lint file`, () => {
-    const args = [`${this.cwd}/index.js`]
+  describe(`${environment}: lint file`, () => {
+    test('default lint', async () => {
+      const { stdout } = await run(this.cwd, this.filename)
+      expect(stdout).toMatchSnapshot()
+    })
 
-    let result = invoke(this.cwd, args, null, 0)
-    expect(result).toMatchSnapshot()
-
-    args.push('-f')
-    args.push('json')
-    result = invoke(this.cwd, args, null, 0)
-    expect(result).toMatchSnapshot()
+    test('lint -f json', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} -f json`)
+      expect(stdout).toMatchSnapshot()
+    })
   })
 
-  test(`${environment}: fix file`, async () => {
-    const filename = `${this.cwd}/index.js`
-    const content = await fs.readFile(filename, 'utf8')
+  describe(`${environment}: fix file`, () => {
+    test('fix --fix-dry-run', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} --fix-dry-run -f json`)
+      expect(stdout).toMatchSnapshot()
+    })
 
-    let result = invoke(this.cwd, `${filename} --fix-dry-run -f json`.split(' '), null, 0)
-    expect(result).toMatchSnapshot()
+    test('fix --stdin --fix-dry-run -f json', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} --stdin --fix-dry-run -f json`, this.content)
+      expect(stdout).toMatchSnapshot()
+    })
 
-    result = invoke(this.cwd, '--stdin --fix-dry-run -f json'.split(' '), content, 0)
-    expect(result).toMatchSnapshot()
+    test('fix --stdin --stdin-filename "filename" --fix-dry-run -f json', async () => {
+      const { stdout } = await run(this.cwd, `--stdin --stdin-filename ${this.filename} --fix-dry-run -f json`, this.content)
+      expect(stdout).toMatchSnapshot()
+    })
 
-    result = invoke(this.cwd, `--stdin --stdin-filename ${filename} --fix-dry-run -f json`.split(' '), content, 0)
-    expect(result).toMatchSnapshot()
-
-    result = invoke(this.cwd, `${filename} --fix -f json`.split(' '), null, 0)
-    expect(result).toMatchSnapshot()
-    console.log(result)
-    expect(fs.readFile(filename, 'utf8')).resolves.toBe(JSON.parse(result)[0].output)
+    test('fix --fix -f json', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} --fix -f json`)
+      expect(stdout).toMatchSnapshot()
+      expect(fs.readFile(this.filename, 'utf8')).resolves.toBe(JSON.parse(stdout)[0].output)
+    })
   })
 }

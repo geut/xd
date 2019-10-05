@@ -4,4 +4,4 @@
 
 const runCommonTests = require('.')
 
-runCommonTests('eslint')
+runCommonTests('standard-prettier')

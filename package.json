@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --verbose",
     "posttest": "npm run lint",
     "lint": "eslint \"**/*.js\"",
     "version": "chan release ${npm_package_version} && git add .",
@@ -37,6 +37,7 @@
     "temp-dir": "^2.0.0"
   },
   "jest": {
+    "testEnvironment": "node",
     "testMatch": [
       "**/tests/**/*.test.js"
     ]
