@@ -78,11 +78,11 @@ exports.invoke = function (cwd, args, text, mtime) {
   let cache = lintCache.get(cwd)
   if (!cache) {
     cache = createCache(cwd)
-  } else if (mtime > cache.last_run) {
+  } else if (mtime > cache.lastRun) {
     clearRequireCache(cwd)
     cache = createCache(cwd)
   }
-  cache.last_run = Date.now()
+  cache.lastRun = Date.now()
 
   const currentOptions = options.parse([0, 0].concat(args))
   cache.chalk.enabled = currentOptions.color
@@ -98,12 +98,10 @@ exports.invoke = function (cwd, args, text, mtime) {
 
   if (currentOptions.printConfig) {
     if (files.length !== 1) {
-      return fail('The --print-config option requires a ' +
-        'single file as positional argument.')
+      return fail('The --print-config option requires a single file as positional argument.')
     }
     if (text) {
-      return fail('The --print-config option is not available for piped-in ' +
-        'code.')
+      return fail('The --print-config option is not available for piped-in code.')
     }
 
     const fileConfig = engine.getConfigForFile(files[0])
