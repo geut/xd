@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`lint file 1`] = `
+exports[`eslint: fix file 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
+
+exports[`eslint: fix file 2`] = `"[{\\"filePath\\":\\"<text>\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
+
+exports[`eslint: fix file 3`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
+
+exports[`eslint: fix file 4`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
+
+exports[`eslint: lint file 1`] = `
 "[0m[0m
 [0m[4m/tmp/xd-eslint-test/index.js[24m[0m
 [0m  [2m1:20[22m  [31merror[39m  Missing semicolon  [2msemi[22m[0m
@@ -11,7 +19,7 @@ exports[`lint file 1`] = `
 # exit 1"
 `;
 
-exports[`lint file 2`] = `
+exports[`eslint: lint file 2`] = `
 "[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Missing semicolon.\\",\\"line\\":1,\\"column\\":20,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[19,19],\\"text\\":\\";\\"}}],\\"errorCount\\":1,\\"warningCount\\":0,\\"fixableErrorCount\\":1,\\"fixableWarningCount\\":0,\\"source\\":\\"console.log('test')\\\\n\\"}]
 # exit 1"
 `;
