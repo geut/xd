@@ -5,10 +5,15 @@ const { generateEnvironment, run } = require('./helpers')
 
 module.exports = function runCommonTests (environment = 'eslint') {
   beforeAll(async () => {
-    const fixture = path.resolve(`./tests/fixtures/${environment}`)
-    this.cwd = await generateEnvironment(fixture, `xd-${environment}-test`)
-    this.filename = `${this.cwd}/index.js`
-    this.content = await fs.readFile(this.filename, 'utf8')
+    try {
+      console.log('beforeAll')
+      const fixture = path.resolve(`./tests/fixtures/${environment}`)
+      this.cwd = await generateEnvironment(fixture, `xd-${environment}-test`)
+      this.filename = `${this.cwd}/index.js`
+      this.content = await fs.readFile(this.filename, 'utf8')
+    } catch (err) {
+      console.log(err)
+    }
     console.log('beforeAll filename', this.filename)
     await run(this.cwd, 'stop')
   })
