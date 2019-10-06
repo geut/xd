@@ -43,8 +43,8 @@ exports.run = async function run (cwd, args, text) {
     }
 
     const result = await p
-    return { stdout: result.stdout.trim(), stderr: result.stderr }
+    return { stdout: result.stdout, stderr: result.stderr }
   } catch (err) {
-    return { stdout: err.stdout.trim(), stderr: err.stderr }
+    return { stdout: err.stdout, stderr: err.stderr }
   }
 }
