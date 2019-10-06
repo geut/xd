@@ -1,27 +1,12 @@
-const { spawn, execFile } = require('child_process')
+const { execFile } = require('child_process')
+const { promisify } = require('util')
 const crypto = require('crypto')
 const path = require('path')
 const cpy = require('cpy')
 const tempDir = require('temp-dir')
 
 function npmInstall (cwd) {
-  return new Promise((resolve, reject) => {
-    const ps = spawn('npm', ['ci'], {
-      stdio: [0, 'pipe', 'pipe'],
-      cwd,
-      env: {
-        FORCE_COLOR: true,
-        npm_config_color: 'always',
-        npm_config_progress: true
-      }
-    })
-
-    ps.on('close', code => {
-      resolve({ code })
-    })
-
-    ps.on('error', reject)
-  })
+  return promisify(execFile)('npm', ['install'], { cwd })
 }
 
 exports.generateEnvironment = async function generateEnvironment (fixture, tmp = crypto.randomBytes(32).toString('hex')) {
