@@ -9,11 +9,13 @@ module.exports = function runCommonTests (environment = 'eslint') {
     this.cwd = await generateEnvironment(fixture, `xd-${environment}-test`)
     this.filename = `${this.cwd}/index.js`
     this.content = await fs.readFile(this.filename, 'utf8')
+    console.log('beforeAll filename', this.filename)
     await run(this.cwd, 'stop')
   })
 
   describe(`${environment}: lint file`, () => {
     test('default lint', async () => {
+      console.log('default lint filename', this.filename)
       const { stdout } = await run(this.cwd, this.filename)
       expect(stdout).toMatchSnapshot()
     })
