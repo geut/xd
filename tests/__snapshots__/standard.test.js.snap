@@ -18,11 +18,7 @@ exports[`standard: lint file default lint 1`] = `
 [0m[0m
 [0m[31m[1m✖ 4 problems (4 errors, 0 warnings)[22m[39m[0m
 [0m[31m[1m[22m[39m[31m[1m  4 errors and 0 warnings potentially fixable with the \`--fix\` option.[22m[39m[0m
-[0m[31m[1m[22m[39m[0m
-"
+[0m[31m[1m[22m[39m[0m"
 `;
 
-exports[`standard: lint file lint -f json 1`] = `
-"[{\\"filePath\\":\\"/tmp/xd-standard-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"space-before-function-paren\\",\\"severity\\":2,\\"message\\":\\"Missing space before function parentheses.\\",\\"line\\":1,\\"column\\":14,\\"nodeType\\":\\"FunctionDeclaration\\",\\"fix\\":{\\"range\\":[13,13],\\"text\\":\\" \\"}},{\\"ruleId\\":\\"quotes\\",\\"severity\\":2,\\"message\\":\\"Strings must use singlequote.\\",\\"line\\":2,\\"column\\":15,\\"nodeType\\":\\"Literal\\",\\"endLine\\":2,\\"endColumn\\":21,\\"fix\\":{\\"range\\":[32,38],\\"text\\":\\"'test'\\"}},{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Extra semicolon.\\",\\"line\\":2,\\"column\\":22,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[38,42],\\"text\\":\\")\\\\n}\\"}},{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Extra semicolon.\\",\\"line\\":5,\\"column\\":7,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[49,51],\\"text\\":\\")\\"}}],\\"errorCount\\":4,\\"warningCount\\":0,\\"fixableErrorCount\\":4,\\"fixableWarningCount\\":0,\\"source\\":\\"function test() {\\\\n  console.log(\\\\\\"test\\\\\\");\\\\n}\\\\n\\\\ntest();\\\\n\\"}]
-"
-`;
+exports[`standard: lint file lint -f json 1`] = `"[{\\"filePath\\":\\"/tmp/xd-standard-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"space-before-function-paren\\",\\"severity\\":2,\\"message\\":\\"Missing space before function parentheses.\\",\\"line\\":1,\\"column\\":14,\\"nodeType\\":\\"FunctionDeclaration\\",\\"fix\\":{\\"range\\":[13,13],\\"text\\":\\" \\"}},{\\"ruleId\\":\\"quotes\\",\\"severity\\":2,\\"message\\":\\"Strings must use singlequote.\\",\\"line\\":2,\\"column\\":15,\\"nodeType\\":\\"Literal\\",\\"endLine\\":2,\\"endColumn\\":21,\\"fix\\":{\\"range\\":[32,38],\\"text\\":\\"'test'\\"}},{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Extra semicolon.\\",\\"line\\":2,\\"column\\":22,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[38,42],\\"text\\":\\")\\\\n}\\"}},{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Extra semicolon.\\",\\"line\\":5,\\"column\\":7,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[49,51],\\"text\\":\\")\\"}}],\\"errorCount\\":4,\\"warningCount\\":0,\\"fixableErrorCount\\":4,\\"fixableWarningCount\\":0,\\"source\\":\\"function test() {\\\\n  console.log(\\\\\\"test\\\\\\");\\\\n}\\\\n\\\\ntest();\\\\n\\"}]"`;

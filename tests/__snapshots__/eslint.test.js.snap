@@ -15,11 +15,7 @@ exports[`eslint: lint file default lint 1`] = `
 [0m[0m
 [0m[31m[1m✖ 1 problem (1 error, 0 warnings)[22m[39m[0m
 [0m[31m[1m[22m[39m[31m[1m  1 error and 0 warnings potentially fixable with the \`--fix\` option.[22m[39m[0m
-[0m[31m[1m[22m[39m[0m
-"
+[0m[31m[1m[22m[39m[0m"
 `;
 
-exports[`eslint: lint file lint -f json 1`] = `
-"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Missing semicolon.\\",\\"line\\":1,\\"column\\":20,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[19,19],\\"text\\":\\";\\"}}],\\"errorCount\\":1,\\"warningCount\\":0,\\"fixableErrorCount\\":1,\\"fixableWarningCount\\":0,\\"source\\":\\"console.log('test')\\\\n\\"}]
-"
-`;
+exports[`eslint: lint file lint -f json 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Missing semicolon.\\",\\"line\\":1,\\"column\\":20,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[19,19],\\"text\\":\\";\\"}}],\\"errorCount\\":1,\\"warningCount\\":0,\\"fixableErrorCount\\":1,\\"fixableWarningCount\\":0,\\"source\\":\\"console.log('test')\\\\n\\"}]"`;
