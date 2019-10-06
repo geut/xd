@@ -12,6 +12,8 @@ This project is based on [eslint_d](https://github.com/mantoni/eslint_d.js).
 
 xd is a tool that detects your local lint and formatter to run the operation using a eslint compatible API.
 
+Behind, it starts a daemon server so your next lint/format operations would run faster.
+
 xd support eslint compatible engines.
 
 We support the next engines:
