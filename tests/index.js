@@ -13,19 +13,19 @@ module.exports = function runCommonTests (environment = 'eslint') {
   })
 
   describe(`${environment}: lint file`, () => {
-    test('default lint', async () => {
-      const { stdout } = await run(this.cwd, this.filename)
+    test('lint -f json', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} -f json`)
       expect(stdout).toMatchSnapshot()
     })
 
-    test('lint -f json', async () => {
-      const { stdout } = await run(this.cwd, `${this.filename} -f json`)
+    test('lint --stdin -f json', async () => {
+      const { stdout } = await run(this.cwd, `${this.filename} -f json`, this.content)
       expect(stdout).toMatchSnapshot()
     })
   })
 
   describe(`${environment}: fix file`, () => {
-    test('fix --fix-dry-run', async () => {
+    test('fix --fix-dry-run -f json', async () => {
       const { stdout } = await run(this.cwd, `${this.filename} --fix-dry-run -f json`)
       expect(stdout).toMatchSnapshot()
     })

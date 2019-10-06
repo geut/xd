@@ -2,20 +2,14 @@
 
 exports[`eslint: fix file fix --fix -f json 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
 
-exports[`eslint: fix file fix --fix-dry-run 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
+exports[`eslint: fix file fix --fix-dry-run -f json 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
 
 exports[`eslint: fix file fix --stdin --fix-dry-run -f json 1`] = `"[{\\"filePath\\":\\"<text>\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
 
 exports[`eslint: fix file fix --stdin --stdin-filename "filename" --fix-dry-run -f json 1`] = `"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[],\\"errorCount\\":0,\\"warningCount\\":0,\\"fixableErrorCount\\":0,\\"fixableWarningCount\\":0,\\"output\\":\\"console.log('test');\\\\n\\"}]"`;
 
-exports[`eslint: lint file default lint 1`] = `
-"[0m[0m
-[0m[4m/tmp/xd-eslint-test/index.js[24m[0m
-[0m  [2m1:20[22m  [31merror[39m  Missing semicolon  [2msemi[22m[0m
-[0m[0m
-[0m[31m[1m✖ 1 problem (1 error, 0 warnings)[22m[39m[0m
-[0m[31m[1m[22m[39m[31m[1m  1 error and 0 warnings potentially fixable with the \`--fix\` option.[22m[39m[0m
-[0m[31m[1m[22m[39m[0m
+exports[`eslint: lint file lint --stdin -f json 1`] = `
+"[{\\"filePath\\":\\"/tmp/xd-eslint-test/index.js\\",\\"messages\\":[{\\"ruleId\\":\\"semi\\",\\"severity\\":2,\\"message\\":\\"Missing semicolon.\\",\\"line\\":1,\\"column\\":20,\\"nodeType\\":\\"ExpressionStatement\\",\\"fix\\":{\\"range\\":[19,19],\\"text\\":\\";\\"}}],\\"errorCount\\":1,\\"warningCount\\":0,\\"fixableErrorCount\\":1,\\"fixableWarningCount\\":0,\\"source\\":\\"console.log('test')\\\\n\\"}]
 "
 `;
 
