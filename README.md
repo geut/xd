@@ -57,6 +57,11 @@ You can use it as:
 - ENV variable `PRETTIER=1 xd index.js`
 - Detected by the presence of `prettier-standard` or `prettierx` in your project.
 
+xd uses prettierx so you can use any of the next configuration files for your prettier:
+
+- .prettierrc
+- .editorconfig
+
 ### eslint
 
 xd will check your local binary eslint and configuration or it will use a fallback binary that we include.
