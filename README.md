@@ -52,9 +52,9 @@ $ xd *.js --fix
 We include a prettier configuration for your standard lint that performs as a linter and formatter.
 
 You can use it as:
-- A binary `xd-prettier index.js`
-- An option `xd --prettier index.js`
-- A env variable `PRETTIER=1 xd index.js`
+- Binary `xd-prettier index.js`
+- Option `xd --prettier index.js`
+- ENV variable `PRETTIER=1 xd index.js`
 - Detected by the presence of `prettier-standard` or `prettierx` in your project.
 
 ### eslint
