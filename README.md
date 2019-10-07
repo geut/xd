@@ -10,9 +10,7 @@ This project is based on [eslint_d](https://github.com/mantoni/eslint_d.js).
 
 ## How it works
 
-xd is a tool that detects your local lint and formatter to run the operation using a eslint compatible API.
-
-Behind, it starts a daemon server so your next lint/format operations would run faster.
+xd is a tool that detects your local lint and starts a daemon server so your next lint/format operations would run faster.
 
 xd support eslint compatible engines.
 
@@ -29,12 +27,12 @@ $ npm install -g @geut/xd
 
 ## <a name="usage"></a> Usage
 
-### standard + prettier
+### standard
 
-Start by adding your dependencies locally:
+Start by adding your lint dependencies locally:
 
 ```
-$ npm install --save-dev standard prettier
+$ npm install --save-dev standard
 ```
 
 That's it, try to execute `xd` in your project:
@@ -43,11 +41,21 @@ That's it, try to execute `xd` in your project:
 $ xd *.js
 ```
 
-Remember that `xd` has a eslint API compatible, so you can format your code with the `standard + prettier` rules by:
+To fix your file:
 
 ```
 $ xd *.js --fix
 ```
+
+### standard + prettier
+
+We include a prettier configuration for your standard lint that performs as a linter and formatter.
+
+You can use it as:
+- A binary `xd-prettier index.js`
+- An option `xd --prettier index.js`
+- A env variable `PRETTIER=1 xd index.js`
+- Detected by the presence of `prettier-standard` or `prettierx` in your project.
 
 ### eslint
 
