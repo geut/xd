@@ -59,5 +59,8 @@
   "bugs": {
     "url": "https://github.com/geut/xd/issues"
   },
-  "homepage": "https://github.com/geut/xd#readme"
+  "homepage": "https://github.com/geut/xd#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
