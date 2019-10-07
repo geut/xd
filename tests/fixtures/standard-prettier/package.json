@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prettier": "^1.18.2",
     "standard": "^14.3.1"
   }
 }

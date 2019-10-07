@@ -1,40 +1,19 @@
 const LRU = require('nanolru')
-const Module = require('module')
-const resolve = require('resolve')
-const options = require('./lib/options')
 const path = require('path')
 
+const options = require('./lib/options')
 const engines = require('./lib/engines')
+const { lookup } = require('./lib/utils')
 
 const lintCache = new LRU(10)
-
-Module.prototype.require = new Proxy(Module.prototype.require, {
-  apply (target, thisArg, argumentsList) {
-    if (argumentsList[0] === 'prettier') {
-      argumentsList[0] = resolve.sync('prettier', { basedir: process.cwd() })
-    }
-
-    return Reflect.apply(target, thisArg, argumentsList)
-  }
-})
 
 function fail (message) {
   return `${message}\n# exit 1`
 }
 
-function lookup (module, cwd) {
-  try {
-    return resolve.sync(module, { basedir: cwd })
-  } catch (e) {
-    // module not found
-    return null
-  }
-}
-
 function createCache (cwd) {
   let engine
   let lintPath
-  let prettierPath
   for (engine of engines) {
     lintPath = lookup(engine.binPath, cwd)
     if (lintPath) {
@@ -42,22 +21,14 @@ function createCache (cwd) {
     }
   }
 
-  if (lintPath && engine.binPath !== 'eslint') {
-    // We search for prettier.
-    prettierPath = lookup('prettier', cwd)
-  } else {
+  if (!lintPath) {
     engine = engines.find(l => l.binPath === 'eslint')
-    lintPath = resolve.sync(engine.binPath)
+    lintPath = lookup(engine.binPath)
   }
 
   return lintCache.set(cwd, {
     lint: require(lintPath),
-    prettierPath,
-    Engine: engine,
-    // use chalk from eslint
-    chalk: require(resolve.sync('chalk', {
-      basedir: path.dirname(lintPath)
-    }))
+    Engine: engine
   })
 }
 
@@ -73,8 +44,6 @@ function clearRequireCache (cwd) {
  * The core_d service entry point.
  */
 exports.invoke = function (cwd, args, text, mtime) {
-  process.chdir(cwd)
-
   let cache = lintCache.get(cwd)
   if (!cache) {
     cache = createCache(cwd)
@@ -85,7 +54,6 @@ exports.invoke = function (cwd, args, text, mtime) {
   cache.lastRun = Date.now()
 
   const currentOptions = options.parse([0, 0].concat(args))
-  cache.chalk.enabled = currentOptions.color
   const files = currentOptions._
   const stdin = currentOptions.stdin
   if (!files.length && (!stdin || typeof text !== 'string')) {
@@ -93,8 +61,13 @@ exports.invoke = function (cwd, args, text, mtime) {
   }
 
   const engineOptions = cache.Engine.translateOptions(currentOptions, path.resolve(cwd))
-  engineOptions.prettierPath = cache.prettierPath
-  const engine = new cache.Engine(cache.lint, engineOptions)
+
+  let engine
+  try {
+    engine = new cache.Engine(cache.lint, engineOptions)
+  } catch (err) {
+    return fail(err.message)
+  }
 
   if (currentOptions.printConfig) {
     if (files.length !== 1) {

@@ -32,6 +32,10 @@ function execute () {
 
   const args = process.argv.slice(2)
 
+  if (process.env.PRETTIER) {
+    args.push('--prettier')
+  }
+
   if (args.indexOf('--stdin') > -1) {
     let text = ''
     process.stdin.setEncoding('utf8')

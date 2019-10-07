@@ -1,7 +1,3 @@
-/**
- * @jest-environment node
- */
-
 const runCommonTests = require('.')
 
-runCommonTests('standard-prettier')
+runCommonTests('standard-prettier', '--prettier')
