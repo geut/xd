@@ -10,6 +10,11 @@ function execute () {
     return
   }
 
+  if (cmd === 'version') {
+    console.log('v%s', require('../package.json').version)
+    return
+  }
+
   if (cmd === '-h' || cmd === '--help') {
     const options = require('../lib/options')
     console.log(options.generateHelp())
