@@ -66,6 +66,12 @@ xd uses prettierx so you can use any of the next configuration files for your pr
 
 xd will check your local binary eslint and configuration or it will use a fallback binary that we include.
 
+## No Server
+
+Exists special cases where maybe you need to use `xd` without running a server.
+
+You can use the binary: `xd-ns` or `xd --no-server`.
+
 ## Help
 
 ```

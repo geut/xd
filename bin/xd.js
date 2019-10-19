@@ -21,6 +21,22 @@ function execute () {
     return
   }
 
+  const args = process.argv.slice(2)
+
+  if (process.env.NO_SERVER || args.includes('--no-server')) {
+    prepareXD(args, (args, text) => {
+      let result = require('..').invoke(process.cwd(), args, text, 0)
+      let fail = false
+      if (result.includes('# exit 1')) {
+        fail = true
+        result = result.replace('\n# exit 1', '')
+      }
+      process.stdout.write(result)
+      process.exit(fail ? 1 : 0)
+    })
+    return
+  }
+
   process.env.CORE_D_TITLE = 'xd'
   process.env.CORE_D_DOTFILE = '.xd'
   process.env.CORE_D_SERVICE = require.resolve('..')
@@ -35,8 +51,12 @@ function execute () {
     return
   }
 
-  const args = process.argv.slice(2)
+  prepareXD(args, (args, text) => {
+    coreD.invoke(args, text)
+  })
+}
 
+function prepareXD (args, cb) {
   if (process.env.PRETTIER) {
     args.push('--prettier')
   }
@@ -48,10 +68,10 @@ function execute () {
       text += chunk
     })
     process.stdin.on('end', () => {
-      coreD.invoke(args, text)
+      cb(args, text)
     })
     return
   }
 
-  coreD.invoke(args)
+  cb(args)
 }

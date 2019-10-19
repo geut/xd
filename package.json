@@ -5,7 +5,8 @@
   "main": "index.js",
   "bin": {
     "xd": "./bin/xd.js",
-    "xd-prettier": "./bin/xd-prettier.js"
+    "xd-prettier": "./bin/xd-prettier.js",
+    "xd-ns": "./bin/xd-ns.js"
   },
   "scripts": {
     "start": "node index.js",
