@@ -2,7 +2,7 @@
   "name": "@geut/xd",
   "version": "1.4.0",
   "description": "Run your lint and formatter in a single fast daemon.",
-  "main": "index.js",
+  "main": "api.js",
   "bin": {
     "xd": "./bin/xd.js",
     "xd-prettier": "./bin/xd-prettier.js",

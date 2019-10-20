@@ -23,9 +23,13 @@ function execute () {
 
   const args = process.argv.slice(2)
 
+  process.env.CORE_D_TITLE = 'xd'
+  process.env.CORE_D_DOTFILE = '.xd'
+  process.env.CORE_D_SERVICE = require.resolve('../cli')
+
   if (process.env.NO_SERVER || args.includes('--no-server')) {
     prepareXD(args, (args, text) => {
-      let result = require('..').invoke(process.cwd(), args, text, 0)
+      let result = require(process.env.CORE_D_SERVICE).invoke(process.cwd(), args, text, 0)
       let fail = false
       if (result.includes('# exit 1')) {
         fail = true
@@ -36,10 +40,6 @@ function execute () {
     })
     return
   }
-
-  process.env.CORE_D_TITLE = 'xd'
-  process.env.CORE_D_DOTFILE = '.xd'
-  process.env.CORE_D_SERVICE = require.resolve('..')
 
   const coreD = require('core_d')
 

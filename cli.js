@@ -2,34 +2,12 @@ const LRU = require('nanolru')
 const path = require('path')
 
 const options = require('./lib/options')
-const engines = require('./lib/engines')
-const { lookup } = require('./lib/utils')
+const { findLint } = require('./lib/apis')
 
 const lintCache = new LRU(10)
 
 function fail (message) {
   return `${message}\n# exit 1`
-}
-
-function createCache (cwd) {
-  let engine
-  let lintPath
-  for (engine of engines) {
-    lintPath = lookup(engine.binPath, cwd)
-    if (lintPath) {
-      break
-    }
-  }
-
-  if (!lintPath) {
-    engine = engines.find(l => l.binPath === 'eslint')
-    lintPath = lookup(engine.binPath)
-  }
-
-  return lintCache.set(cwd, {
-    lint: require(lintPath),
-    Engine: engine
-  })
 }
 
 function clearRequireCache (cwd) {
@@ -40,18 +18,16 @@ function clearRequireCache (cwd) {
     })
 }
 
-/*
- * The core_d service entry point.
- */
 exports.invoke = function (cwd, args, text, mtime) {
-  let cache = lintCache.get(cwd)
-  if (!cache) {
-    cache = createCache(cwd)
-  } else if (mtime > cache.lastRun) {
+  let lint = lintCache.get(cwd)
+  if (!lint) {
+    lint = findLint(cwd)
+  } else if (mtime > lint.lastRun) {
     clearRequireCache(cwd)
-    cache = createCache(cwd)
+    lint = findLint(cwd)
   }
-  cache.lastRun = Date.now()
+  lint.lastRun = Date.now()
+  lintCache.set(cwd, lint)
 
   const currentOptions = options.parse([0, 0].concat(args))
   const files = currentOptions._
@@ -60,11 +36,11 @@ exports.invoke = function (cwd, args, text, mtime) {
     return `${options.generateHelp()}\n`
   }
 
-  const engineOptions = cache.Engine.translateOptions(currentOptions, path.resolve(cwd))
+  const engineOptions = lint.translateOptions(currentOptions, path.resolve(cwd))
 
   let engine
   try {
-    engine = new cache.Engine(cache.lint, engineOptions)
+    engine = new lint.CLIEngine(engineOptions)
   } catch (err) {
     return fail(err.message)
   }
@@ -97,11 +73,11 @@ exports.invoke = function (cwd, args, text, mtime) {
   }
 
   if (currentOptions.fix && !currentOptions.fixDryRun) {
-    engine.outputFixes(report)
+    lint.CLIEngine.outputFixes(report)
   }
 
   if (currentOptions.quiet) {
-    report.results = engine.getErrorResults(report.results)
+    report.results = lint.CLIEngine.getErrorResults(report.results)
   }
 
   const format = currentOptions.format
