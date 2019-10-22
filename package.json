@@ -3,6 +3,12 @@
   "version": "1.4.0",
   "description": "Run your lint and formatter in a single fast daemon.",
   "main": "api.js",
+  "files": [
+    "lib",
+    "bin",
+    "api.js",
+    "cli.js"
+  ],
   "bin": {
     "xd": "./bin/xd.js",
     "xd-prettier": "./bin/xd-prettier.js",
