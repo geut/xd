@@ -19,6 +19,8 @@ function clearRequireCache (cwd) {
 }
 
 exports.invoke = function (cwd, args, text, mtime) {
+  process.chdir(cwd)
+
   let lint = lintCache.get(cwd)
   if (!lint) {
     lint = findLint(cwd)
