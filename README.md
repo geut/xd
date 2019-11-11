@@ -16,7 +16,9 @@ xd support eslint compatible engines.
 
 We support the next engines:
   - `standard`
+  - `semistandard`
   - `standard + prettier`
+  - `semistandard + prettier`
   - `eslint`
 
 ## <a name="install"></a> Install
