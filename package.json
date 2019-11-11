@@ -1,6 +1,6 @@
 {
   "name": "@geut/xd",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Run your lint and formatter in a single fast daemon.",
   "main": "api.js",
   "files": [
