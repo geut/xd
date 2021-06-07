@@ -23,23 +23,21 @@
     "prepublishOnly": "npm test"
   },
   "dependencies": {
-    "babel-eslint": "^10.0.3",
-    "core_d": "^1.0.1",
-    "eslint": "^6.5.1",
-    "eslint-plugin-prettierx": "^0.4.0",
+    "core_d": "^1.1.0",
+    "eslint": "^7.5.1",
+    "eslint-plugin-prettierx": "^0.14.0",
     "nanolru": "^1.0.0",
-    "optionator": "^0.8.2",
-    "prettierx": "^0.7.1",
-    "resolve": "^1.12.0"
+    "optionator": "^0.8.3",
+    "prettierx": "^0.14.0",
+    "resolve": "^1.19.0"
   },
   "devDependencies": {
-    "@geut/chan": "^2.0.0",
+    "@geut/chan": "^2.2.1",
     "cpy": "^7.3.0",
-    "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-node": "^9.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.8.0",
     "p-wait-for": "^3.1.0",
     "temp-dir": "^2.0.0"
